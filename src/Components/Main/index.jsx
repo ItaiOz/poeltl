@@ -1,4 +1,5 @@
-import { GuessArea } from "./Components/GuessArea";
+import React from "react";
+import { GuessArea } from "../GuessArea";
 
 export const Main = () => {
   return (
