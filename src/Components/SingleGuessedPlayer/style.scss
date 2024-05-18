@@ -1,0 +1,29 @@
+.player-cell {
+  color: black;
+  padding-left: 10px;
+  font-weight: bold;
+  white-space: nowrap;
+
+  &.todays-player {
+    color: white;
+    background: linear-gradient(
+      180deg,
+      #970c0f 0%,
+      #9e2421 25%,
+      #b56a5a 55%,
+      #ca9590 100%
+    );
+  }
+}
+
+.player-cell::before {
+  content: "";
+  display: block;
+  margin-bottom: 5px;
+}
+
+.player-cell::after {
+  content: "";
+  display: block;
+  margin-bottom: 5px;
+}

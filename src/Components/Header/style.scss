@@ -1,0 +1,12 @@
+.header {
+  display: flex;
+  justify-content: center;
+  background-color: #015764;
+  color: white;
+
+  .nav {
+    display: flex;
+    justify-content: space-around;
+    width: 200px;
+  }
+}

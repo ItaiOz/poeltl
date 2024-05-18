@@ -1,0 +1,105 @@
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    // transform: translateX(-20px); /* Move cells slightly to the left */
+  }
+
+  50% {
+    opacity: 0.5;
+  }
+
+  100% {
+    opacity: 1;
+    // transform: translateX(0); /* Move cells back to their original position */
+  }
+}
+
+.guesses-players-table-container {
+  width: 100%;
+
+  .guess-table {
+    border-collapse: collapse;
+    width: 100%;
+    table-layout: fixed;
+
+    .guess-title {
+      border-bottom: 2px solid #015764;
+      th {
+        color: #015764;
+        font-size: 10px;
+      }
+    }
+
+    .player-cell {
+      animation: fadeIn 1.1s ease forwards;
+    }
+
+    .guessing-row {
+      border-bottom: 1px solid gray;
+
+      .green {
+        background: #37bd75;
+        color: white;
+      }
+
+      .yellow {
+        background: #efe474 !important;
+      }
+
+      .red {
+        background: #920003;
+        color: white;
+      }
+
+      td {
+        background: linear-gradient(
+          0deg,
+          #f7f1ed 0%,
+          #f3eeea 35%,
+          #d7d4cf 100%
+        );
+        font-size: 10px;
+        border-right: 1px solid white;
+        text-align: center;
+        height: 45px;
+        width: 25px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        opacity: 0;
+        animation: fadeIn 0.1s ease forwards;
+
+        &.team-cell {
+          padding: 3px 0;
+        }
+      }
+
+      td:nth-child(1) {
+        animation-delay: 0.2s;
+      }
+
+      td:nth-child(2) {
+        animation-delay: 0.3s;
+      }
+
+      td:nth-child(3) {
+        animation-delay: 0.4s;
+      }
+
+      td:nth-child(4) {
+        animation-delay: 0.5s;
+      }
+
+      td:nth-child(5) {
+        animation-delay: 0.6s;
+      }
+
+      td:nth-child(6) {
+        animation-delay: 0.8s;
+      }
+
+      td:nth-child(7) {
+        animation-delay: 1s;
+      }
+    }
+  }
+}

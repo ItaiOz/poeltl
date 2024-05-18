@@ -1,0 +1,13 @@
+.team-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  img {
+    width: 25px;
+    height: 25px;
+  }
+  p {
+    margin: unset;
+  }
+}

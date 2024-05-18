@@ -1,0 +1,51 @@
+.search-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 200px;
+  margin-bottom: 20px;
+
+  .search-window {
+    min-width: 250px;
+    border: 1px solid #015764;
+
+    .css-t3ipsp-control {
+      border: 1px solid #93d8c9;
+      outline: none;
+    }
+
+    .css-13cymwt-control {
+      border: 1px solid #93d8c9 !important;
+      outline: none;
+    }
+
+    .css-1nmdiq5-menu {
+      margin: unset;
+    }
+    .css-4xgw5l-IndicatorsContainer2 {
+      display: none;
+    }
+  }
+
+  .dropdown {
+    width: 100%;
+    max-height: 300px;
+    overflow: scroll;
+    overflow-x: hidden;
+    background-color: white;
+
+    li {
+      list-style-type: none;
+    }
+
+    &.results {
+      border: 1px solid #93d8c9;
+    }
+
+    .chosen-player {
+      &:hover {
+        background-color: #93d8c9;
+      }
+    }
+  }
+}
