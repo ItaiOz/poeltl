@@ -1,18 +1,16 @@
 import "./App.css";
-import { GuessArea } from "./Components/GuessArea";
-import { Header } from "./Components/Header";
+import { Main } from "./Components/Main";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 function App() {
   return (
     <>
       <Header />
-      <div className="main-container">
-        <div className="game-title">
-          <h1 className="h1-game-title">POELTL</h1>
-          <h4 className="h4-game-title">NBA PLAYER GUESSING GAME</h4>
-        </div>
-        <GuessArea />
-      </div>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Main />} />
+        </Routes>
+      </BrowserRouter>
     </>
   );
 }
