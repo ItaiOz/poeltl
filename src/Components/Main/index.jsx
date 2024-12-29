@@ -1,5 +1,6 @@
 import React from "react";
 import { GuessArea } from "../GuessArea";
+import "../../firebaseConfig";
 
 export const Main = () => {
   return (

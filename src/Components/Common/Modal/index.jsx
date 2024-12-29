@@ -1,5 +1,5 @@
+import { RunningClock } from "./RunningClock";
 import "./style.scss";
-import { currPlayer } from "../../utils";
 
 export const Modal = ({
   showModal,
@@ -8,10 +8,8 @@ export const Modal = ({
   guessCount,
   isGameOver,
   revealPlayer,
+  todaysPlayer,
 }) => {
-  const currPlayerName =
-    currPlayer[2].toUpperCase() + " " + currPlayer[1].toUpperCase();
-
   const modalInnerText = () => {
     if (isHidden)
       return (
@@ -27,13 +25,13 @@ export const Modal = ({
           {isGameOver ? (
             <>
               <span className="top-text">Sorry, the correct answer is</span>
-              <span className="bottom-text">{currPlayerName}</span>
+              <span className="bottom-text">{todaysPlayer.name}</span>
               <span className="top-text">You can try again tomorrow</span>
             </>
           ) : (
             <>
               <span className="top-text">Great job!</span>
-              <span className="bottom-text">{currPlayerName}</span>
+              <span className="bottom-text">{todaysPlayer.name}</span>
               <span className="top-text">{`You solved it in ${guessCount} ${
                 guessCount > 1 ? "guesses" : "guess"
               }`}</span>
@@ -65,7 +63,7 @@ export const Modal = ({
             <div className="img-container">
               <img
                 className={`player-image ${isHidden ? "hidden" : ""}`}
-                src={`https://cdn.nba.com/headshots/nba/latest/260x190/${currPlayer[0]}.png`}
+                src={`https://cdn.nba.com/headshots/nba/latest/260x190/${todaysPlayer.id}.png`}
                 alt="player"
               />
               {isHidden && <div className="question-mark">?</div>}
@@ -76,7 +74,7 @@ export const Modal = ({
             {!isHidden && (
               <div className="new-player-countdown">
                 <p>New mystery player in</p>
-                <p>12:32:41</p>
+                <RunningClock />
               </div>
             )}
           </div>

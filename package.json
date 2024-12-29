@@ -2,7 +2,7 @@
   "name": "poeltl",
   "private": true,
   "version": "0.0.0",
-  "type": "module",
+  "type": "commonjs",
   "homepage": "https://itaioz.github.io/poeltl",
   "scripts": {
     "dev": "vite --host",
@@ -13,6 +13,9 @@
     "deploy": "gh-pages -d dist"
   },
   "dependencies": {
+    "cors": "^2.8.5",
+    "firebase": "^10.12.1",
+    "firebase-tools": "^13.10.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.23.1",

@@ -1,7 +1,6 @@
-import { activePlayers, names } from "../../assets/mock-data";
 import "../GuessedPlayers/style.scss";
 import { TeamLogo } from "../TeamLogo";
-import { conferenceMap, divisionMap, currPlayer } from "../utils";
+import { conferenceMap, divisionMap } from "../utils";
 import { StatCell } from "../Common/StatCell";
 import "./style.scss";
 import {
@@ -14,54 +13,55 @@ import {
   RED,
 } from "./utils";
 
-const TEAM_NICK = 9;
-const TEAM_CODE = 4;
-const NUMBER = 10;
-const POSITION = 11;
-const HEIGHT = 12;
-const DRAFT = 16;
+export const SingleGuessedPlayer = ({
+  playersList,
+  todaysPlayer,
+  guessedName,
+  isGameOver,
+}) => {
+  if (!playersList) return;
+  const result = playersList.find((player) => player.name === guessedName);
 
-export const SingleGuessedPlayer = ({ name, isGameOver }) => {
-  const result = activePlayers.find((subArray) => subArray[3] === name.value);
-
-  const teamClassName =
-    currPlayer[TEAM_NICK] === result[TEAM_NICK] ? GREEN : "";
+  const teamClassName = todaysPlayer.team === result.team ? GREEN : "";
 
   const divisionClassName =
-    divisionMap[currPlayer[TEAM_CODE]] === divisionMap[result[TEAM_CODE]]
+    divisionMap[todaysPlayer.teamId] === divisionMap[result.teamId]
       ? GREEN
       : "";
 
   const confClassName =
-    conferenceMap[currPlayer[TEAM_CODE]] === conferenceMap[result[TEAM_CODE]]
+    conferenceMap[todaysPlayer.teamId] === conferenceMap[result.teamId]
       ? GREEN
       : "";
 
   const heightClassName = getHeightClassName(
-    currPlayer[HEIGHT],
-    result[HEIGHT]
+    todaysPlayer.height,
+    result.height
   );
 
   const heightBalance =
-    getFullHeight(result[HEIGHT]) - getFullHeight(currPlayer[HEIGHT]);
+    getFullHeight(result.height) - getFullHeight(todaysPlayer.height);
 
-  const draftClassName = getDraftClassName(currPlayer[DRAFT], result[DRAFT]);
+  const draftClassName = getDraftClassName(
+    todaysPlayer.draftYear,
+    result.draftYear
+  );
 
   const numberClassName = getNumberClassName(
-    currPlayer[NUMBER],
-    result[NUMBER]
+    todaysPlayer.jersey,
+    result.jersey
   );
   const positionClassName = getPositionClassName(
-    currPlayer[POSITION],
-    result[POSITION]
+    todaysPlayer.position,
+    result.position
   );
 
   const draftBalance =
-    currPlayer[DRAFT] === null || result[DRAFT] === null
+    todaysPlayer.draftYear === null || result.draftYear === null
       ? undefined
-      : -(currPlayer[DRAFT] - result[DRAFT]);
+      : -(todaysPlayer.draftYear - result.draftYear);
 
-  const numberBalance = -(currPlayer[NUMBER] - result[NUMBER]);
+  const numberBalance = -(+todaysPlayer.jersey - +result.jersey);
 
   return (
     <>
@@ -70,35 +70,35 @@ export const SingleGuessedPlayer = ({ name, isGameOver }) => {
           colSpan="7"
           className={`player-cell ${isGameOver ? "todays-player" : ""}`}
         >
-          {name.label}
+          {guessedName}
         </td>
       </tr>
       <tr className="guessing-row">
         <td className={isGameOver ? RED : `team-cell ${teamClassName}`}>
-          <TeamLogo teamCode={result[TEAM_CODE]} teamName={result[TEAM_NICK]} />
+          <TeamLogo teamCode={result.teamId} teamName={result.abbreviation} />
         </td>
         <td className={isGameOver ? RED : divisionClassName}>
-          {divisionMap[result[TEAM_CODE]]}
+          {divisionMap[result.teamId]}
         </td>
         <td className={isGameOver ? RED : confClassName}>
-          {conferenceMap[result?.[TEAM_CODE]]}
+          {conferenceMap[result?.teamId]}
         </td>
         <StatCell
-          statistic={result?.[POSITION]}
+          statistic={result?.position}
           className={isGameOver ? RED : positionClassName}
         />
         <StatCell
-          statistic={result?.[HEIGHT]}
+          statistic={result?.height}
           className={isGameOver ? RED : heightClassName}
           arrow={heightBalance}
         />
         <StatCell
-          statistic={result[DRAFT]}
+          statistic={result.draftYear}
           className={isGameOver ? RED : draftClassName}
           arrow={draftBalance}
         />
         <StatCell
-          statistic={result[NUMBER]}
+          statistic={result.jersey}
           className={isGameOver ? RED : numberClassName}
           arrow={numberBalance}
         />

@@ -1,13 +1,19 @@
 import React from "react";
 import { useState } from "react";
-import { tempNames } from "../../assets/mock-data";
 import "./style.scss";
 import { getPlaceHolderTitle } from "./utils";
 import Select from "react-select";
 
-export const SearchInput = ({ guessCount, handleGuess, revealPlayer }) => {
+export const SearchInput = ({
+  guessCount,
+  handleGuess,
+  revealPlayer,
+  playersNames,
+  guessedPlayersList,
+}) => {
   const [filteredPlayers, setFilteredPlayers] = useState([]);
 
+  console.log(guessedPlayersList);
   const placHolderTitle = getPlaceHolderTitle(revealPlayer, guessCount);
 
   const handleInputChange = (searchStr) => {
@@ -16,12 +22,13 @@ export const SearchInput = ({ guessCount, handleGuess, revealPlayer }) => {
       return;
     }
     const str = searchStr.toLowerCase();
-    const temp = tempNames.filter((name) =>
-      name.label.toLowerCase().includes(str)
+    const foundNames = playersNames.filter((name) =>
+      name.toLowerCase().includes(str)
     );
-    const foundPlayers = temp.map((pl) => ({
-      value: pl.value,
-      label: pl.label,
+    const foundPlayers = foundNames.map((pl) => ({
+      value: pl,
+      label: pl,
+      isDisabled: guessedPlayersList?.find((player) => player === pl),
     }));
 
     setFilteredPlayers(foundPlayers);

@@ -24,7 +24,7 @@ export const getFullHeight = (height) => {
 };
 
 export const getNumberClassName = (num1, num2) => {
-  const number = Math.abs(num1 - num2);
+  const number = Math.abs(+num1 - +num2);
 
   if (number <= 2) {
     if (num1 === num2) return GREEN;

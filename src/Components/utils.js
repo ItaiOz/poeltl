@@ -1,4 +1,4 @@
-import { activePlayers } from "../assets/mock-data";
+import { getPlayers } from "../firebaseConfig";
 
 export const currPlayer = [
   1627826,
@@ -93,4 +93,12 @@ export const conferenceMap = {
   1610612754: "East",
   1610612765: "East",
   1610612739: "East",
+};
+
+export const getPlayerNames = async () => {
+  const players = await getPlayers();
+  return Object.values(players);
+  // const names = Object.values(players).map((player) => player.name);
+
+  // return names;
 };

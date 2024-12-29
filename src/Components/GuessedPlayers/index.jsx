@@ -1,9 +1,14 @@
 import React from "react";
 import { SingleGuessedPlayer } from "../SingleGuessedPlayer";
 import "./style.scss";
-import { currPlayer } from "../utils";
 
-export const GuessedPlayers = ({ playersList, isGameOver, guessCount }) => {
+export const GuessedPlayers = ({
+  playersList,
+  guessedPlayersList,
+  todaysPlayer,
+  isGameOver,
+  guessCount,
+}) => {
   return (
     <div className="guesses-players-table-container">
       <table className="guess-table">
@@ -19,16 +24,20 @@ export const GuessedPlayers = ({ playersList, isGameOver, guessCount }) => {
           </tr>
         </thead>
         <tbody>
-          {playersList.map((name) => (
-            <SingleGuessedPlayer name={name} />
+          {guessedPlayersList.map((name) => (
+            <SingleGuessedPlayer
+              key={name}
+              playersList={playersList}
+              todaysPlayer={todaysPlayer}
+              guessedName={name}
+            />
           ))}
           {guessCount === 9 && (
             <SingleGuessedPlayer
-              name={{
-                value: currPlayer[3],
-                label: currPlayer[2] + " " + currPlayer[1],
-              }}
+              playersList={playersList}
+              guessedName={todaysPlayer.name}
               isGameOver={isGameOver}
+              todaysPlayer={todaysPlayer}
             />
           )}
         </tbody>
