@@ -2,15 +2,15 @@ import { initializeApp } from "firebase/app";
 import { getDatabase, ref, set, get, child } from "firebase/database";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBsqqRkKEEdjLs8VCHbXtdBrXUKB_CFJ3I",
-  authDomain: "poeltl-9d625.firebaseapp.com",
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
   databaseURL:
     "https://poeltl-9d625-default-rtdb.europe-west1.firebasedatabase.app",
-  projectId: "poeltl-9d625",
-  storageBucket: "poeltl-9d625.firebasestorage.app",
-  messagingSenderId: "200405047830",
-  appId: "1:200405047830:web:3c8f20d562a669193f3337",
-  measurementId: "G-13QLGZE7V7",
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
+  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID,
 };
 
 // Initialize Firebase

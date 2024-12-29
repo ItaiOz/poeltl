@@ -13,7 +13,6 @@ export const SearchInput = ({
 }) => {
   const [filteredPlayers, setFilteredPlayers] = useState([]);
 
-  console.log(guessedPlayersList);
   const placHolderTitle = getPlaceHolderTitle(revealPlayer, guessCount);
 
   const handleInputChange = (searchStr) => {
