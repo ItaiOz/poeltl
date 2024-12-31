@@ -1,4 +1,3 @@
-import React from "react";
 import { GuessArea } from "../GuessArea";
 import "../../firebaseConfig";
 
