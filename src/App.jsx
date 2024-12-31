@@ -1,7 +1,7 @@
 import "./App.css";
-import { Main } from "./Components/Main";
 import { Header } from "./Components/Header";
 import { HashRouter as Router, Route, Routes } from "react-router-dom";
+import { PoeltlWrapper } from "./Components/PoeltlWrapper";
 
 function App() {
   console.log(import.meta.env.VITE_FIREBASE_API_KEY);
@@ -10,7 +10,7 @@ function App() {
       <Header />
       <Router>
         <Routes>
-          <Route path="/" element={<Main />} />
+          <Route path="/" element={<PoeltlWrapper />} />
         </Routes>
       </Router>
     </>

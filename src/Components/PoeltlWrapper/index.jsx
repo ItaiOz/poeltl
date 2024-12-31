@@ -1,7 +1,7 @@
 import { GuessArea } from "../GuessArea";
 import "../../firebaseConfig";
 
-export const Main = () => {
+export const PoeltlWrapper = () => {
   return (
     <>
       <div className="main-container">
