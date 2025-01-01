@@ -63,8 +63,9 @@ export const GuessArea = () => {
       if (!!playerObj) guessedStoredPlayers.push(playerObj.name);
     });
 
+    console.log(guessedStoredPlayers);
     setGuessedPlayersList(guessedStoredPlayers);
-    setGuessCount(guessedStoredPlayers.length);
+    setGuessCount(guessedStoredPlayers.length + 1);
 
     if (playersIdList.length >= 8) {
       setShowModal(true);
