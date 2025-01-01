@@ -2,11 +2,12 @@ import { useEffect, useState } from "react";
 import { GuessedPlayers } from "../GuessedPlayers";
 import { SearchInput } from "../SearchInput/SearchInput";
 import { Silhouette } from "../Silhouette";
-import { getPlayerNames } from "../utils";
+import { getAllPlayers } from "../utils";
 import { Modal } from "../Common/Modal";
 import { getTodayPlayer } from "../../firebaseConfig";
 
 import "./style.scss";
+import { getFormattedDate, saveGuess } from "./utils";
 
 export const GuessArea = () => {
   const [guessCount, setGuessCount] = useState(1);
@@ -19,11 +20,12 @@ export const GuessArea = () => {
   const [playersList, setPlayersList] = useState([]);
 
   const handleGuess = (clickedPlayer) => {
+    saveGuess(playersList, clickedPlayer);
     setGuessedPlayersList((prevState) => [...prevState, clickedPlayer.value]);
-    if (clickedPlayer.value === todaysPlayer.name || guessCount + 1 === 9) {
+    if (guessCount + 1 === 9) {
       setShowModal(true);
       setRevealPlayer(true);
-      if (clickedPlayer.value !== todaysPlayer.name && guessCount + 1 === 9) {
+      if (clickedPlayer.value !== todaysPlayer.name) {
         setIsGameOver(true);
         setGuessCount(guessCount + 1);
       }
@@ -36,16 +38,46 @@ export const GuessArea = () => {
   };
 
   const getNames = async () => {
-    const allPlayers = await getPlayerNames();
-    setPlayersList(allPlayers);
+    const allPlayers = await getAllPlayers();
+    const retrievedPlayersList = Object.values(allPlayers);
+    setPlayersList(retrievedPlayersList);
 
-    const names = allPlayers.map((player) => player.name);
+    const names = retrievedPlayersList.map((player) => player.name);
     setPlayerNames(names);
+  };
+
+  const checkForCurrentGuesses = async () => {
+    const storedObject = localStorage.getItem("guesses");
+
+    const formattedDate = getFormattedDate();
+
+    const parsedObject = JSON.parse(storedObject);
+    if (!storedObject || !parsedObject[formattedDate]) return;
+
+    const allPlayersObj = await getAllPlayers();
+    const playersIdList = parsedObject[formattedDate];
+
+    const guessedStoredPlayers = [];
+    playersIdList.forEach((id) => {
+      const playerObj = allPlayersObj[id];
+      if (!!playerObj) guessedStoredPlayers.push(playerObj.name);
+    });
+
+    setGuessedPlayersList(guessedStoredPlayers);
+    setGuessCount(guessedStoredPlayers.length);
+
+    if (playersIdList.length >= 8) {
+      setShowModal(true);
+      setRevealPlayer(true);
+      setIsGameOver(true);
+      setGuessCount(playersIdList.length + 1);
+    }
   };
 
   useEffect(() => {
     getPlayer();
     getNames();
+    checkForCurrentGuesses();
   }, []);
 
   return (

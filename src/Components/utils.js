@@ -95,10 +95,7 @@ export const conferenceMap = {
   1610612739: "East",
 };
 
-export const getPlayerNames = async () => {
+export const getAllPlayers = async () => {
   const players = await getPlayers();
-  return Object.values(players);
-  // const names = Object.values(players).map((player) => player.name);
-
-  // return names;
+  return players;
 };

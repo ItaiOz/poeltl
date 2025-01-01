@@ -4,7 +4,6 @@ import { HashRouter as Router, Route, Routes } from "react-router-dom";
 import { PoeltlWrapper } from "./Components/PoeltlWrapper";
 
 function App() {
-  console.log(import.meta.env.VITE_FIREBASE_API_KEY);
   return (
     <>
       <Header />
