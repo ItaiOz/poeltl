@@ -22,7 +22,7 @@ export const GuessArea = () => {
   const handleGuess = (clickedPlayer) => {
     saveGuess(playersList, clickedPlayer);
     setGuessedPlayersList((prevState) => [...prevState, clickedPlayer.value]);
-    if (guessCount + 1 === 9) {
+    if (clickedPlayer.value === todaysPlayer.name || guessCount + 1 === 9) {
       setShowModal(true);
       setRevealPlayer(true);
       if (clickedPlayer.value !== todaysPlayer.name) {
@@ -34,7 +34,9 @@ export const GuessArea = () => {
 
   const getPlayer = async () => {
     const player = await getTodayPlayer();
-    setTodaysPlayer(Object.values(player)[0]);
+    const currPlayer = Object.values(player)[0];
+    setTodaysPlayer(currPlayer);
+    return currPlayer;
   };
 
   const getNames = async () => {
@@ -46,7 +48,7 @@ export const GuessArea = () => {
     setPlayerNames(names);
   };
 
-  const checkForCurrentGuesses = async () => {
+  const checkForCurrentGuesses = async (todaysPlayer) => {
     const storedObject = localStorage.getItem("guesses");
 
     const formattedDate = getFormattedDate();
@@ -63,23 +65,29 @@ export const GuessArea = () => {
       if (!!playerObj) guessedStoredPlayers.push(playerObj.name);
     });
 
-    console.log(guessedStoredPlayers);
     setGuessedPlayersList(guessedStoredPlayers);
     setGuessCount(guessedStoredPlayers.length + 1);
 
-    if (playersIdList.length >= 8) {
+    const lastGuessedPlayerId =
+      guessedStoredPlayers[guessedStoredPlayers.length - 1];
+    const lastGuessedPlayer = allPlayersObj[lastGuessedPlayerId];
+
+    if (playersIdList.length >= 8 || todaysPlayer.name === lastGuessedPlayer) {
       setShowModal(true);
       setRevealPlayer(true);
       setIsGameOver(true);
-      setGuessCount(playersIdList.length + 1);
+      setGuessCount(playersIdList.length);
     }
   };
 
   useEffect(() => {
-    getPlayer();
+    const todaysPlayer = getPlayer();
     getNames();
-    checkForCurrentGuesses();
+    checkForCurrentGuesses(todaysPlayer);
   }, []);
+
+  console.log(guessCount);
+  console.log(guessedPlayersList);
 
   return (
     <div className="guess-container">
@@ -91,7 +99,7 @@ export const GuessArea = () => {
         guessedPlayersList={guessedPlayersList}
       />
       <Silhouette showModal={() => setShowModal(true)} />
-      {guessCount > 1 && (
+      {(revealPlayer || guessCount > 1) && (
         <GuessedPlayers
           playersList={playersList}
           guessedPlayersList={guessedPlayersList}
