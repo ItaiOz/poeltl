@@ -36,15 +36,15 @@ export const getFormattedDate = () => {
 
 export const setGusessesDistribution = (guessCount, isCorrect) => {
   const tempGuessDist = localStorage.getItem("guessDist");
-  const parsedObject = JSON.parse(tempGuessDist);
-
   const guessNum = isCorrect ? guessCount : 0;
+
+  const parsedObject = JSON.parse(tempGuessDist);
 
   const currCount = parsedObject[guessNum];
 
   parsedObject[guessNum] = currCount + 1;
 
-  localStorage.setItem("guessDist", JSON.stringify({ parsedObject }));
+  localStorage.setItem("guessDist", JSON.stringify(parsedObject));
 };
 
 export const getGuessesPlayersList = (allPlayersObj) => {
@@ -67,4 +67,13 @@ export const getGuessesPlayersList = (allPlayersObj) => {
     guessedStoredPlayers,
     lastPlayerId: playersIdList[playersIdList.length - 1],
   };
+};
+
+export const setInitialGuessDist = () => {
+  const tempGuessDist = localStorage.getItem("guessDist");
+  if (!tempGuessDist)
+    localStorage.setItem(
+      "guessDist",
+      JSON.stringify({ 0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0 })
+    );
 };

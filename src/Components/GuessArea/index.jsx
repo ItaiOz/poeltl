@@ -9,6 +9,7 @@ import {
   getGuessesPlayersList,
   saveGuess,
   setGusessesDistribution,
+  setInitialGuessDist,
 } from "./utils";
 import "./style.scss";
 
@@ -26,10 +27,10 @@ export const GuessArea = () => {
     saveGuess(playersList, clickedPlayer);
     setGuessedPlayersList((prevState) => [...prevState, clickedPlayer.value]);
     if (clickedPlayer.value === todaysPlayer.name || guessCount + 1 === 9) {
-      // setGusessesDistribution(
-      //   guessCount,
-      //   clickedPlayer.value === todaysPlayer.name
-      // );
+      setGusessesDistribution(
+        guessCount,
+        clickedPlayer.value === todaysPlayer.name
+      );
       setShowModal(true);
       setRevealPlayer(true);
       if (clickedPlayer.value !== todaysPlayer.name) {
@@ -62,20 +63,15 @@ export const GuessArea = () => {
       getGuessesPlayersList(allPlayersObj);
 
     setGuessedPlayersList(guessedStoredPlayers);
-    setGuessCount(guessedStoredPlayers.length + 1);
 
     const lastGuessedPlayer = allPlayersObj[lastPlayerId];
+    const guessesLen = guessedStoredPlayers.length;
 
-    if (
-      guessedStoredPlayers.length >= 8 ||
-      todaysPlayer.name === lastGuessedPlayer.name
-    ) {
+    if (guessesLen >= 8 || todaysPlayer.name === lastGuessedPlayer.name) {
+      setGuessCount(guessesLen < 8 ? guessesLen : guessesLen + 1);
       setShowModal(true);
       setRevealPlayer(true);
-      if (guessedStoredPlayers.length >= 8) {
-        setIsGameOver(true);
-        setGuessCount(guessedStoredPlayers.length + 1);
-      }
+      if (guessesLen >= 8) setIsGameOver(true);
     }
   };
 
@@ -85,10 +81,25 @@ export const GuessArea = () => {
         const todaysPlayer = await getPlayer();
         getNames();
         checkForCurrentGuesses(todaysPlayer);
+        setInitialGuessDist();
       } catch (error) {
         console.error("Error fetching today's player:", error);
       }
     };
+    // localStorage.setItem(
+    //   "guessDist",
+    //   JSON.stringify({
+    //     1: 2,
+    //     2: 1,
+    //     3: 4,
+    //     4: 4,
+    //     5: 7,
+    //     6: 6,
+    //     7: 17,
+    //     8: 2,
+    //     0: 5,
+    //   })
+    // );
 
     fetchData(); // Call the async function
   }, []);
