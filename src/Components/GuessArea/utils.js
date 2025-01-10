@@ -47,6 +47,8 @@ export const setGusessesDistribution = (guessCount, isCorrect) => {
   localStorage.setItem("guessDist", JSON.stringify(parsedObject));
 };
 
+console.log("temp");
+
 export const getGuessesPlayersList = (allPlayersObj) => {
   const storedObject = localStorage.getItem("guesses");
 
