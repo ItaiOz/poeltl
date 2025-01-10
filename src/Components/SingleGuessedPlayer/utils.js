@@ -34,7 +34,7 @@ export const getNumberClassName = (num1, num2) => {
 };
 
 export const getDraftClassName = (draft1, draft2) => {
-  if (draft1 === null || draft2 === null) {
+  if (!draft1 || !draft2) {
     if (draft1 === draft2) return GREEN;
     return "";
   }

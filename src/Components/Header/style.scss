@@ -3,10 +3,16 @@
   justify-content: center;
   background-color: #015764;
   color: white;
+  height: 50px;
 
   .nav {
     display: flex;
     justify-content: space-around;
+    align-items: center;
     width: 200px;
+
+    .navbar-item {
+      font-weight: 600;
+    }
   }
 }

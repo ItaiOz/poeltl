@@ -5,9 +5,12 @@ import { Silhouette } from "../Silhouette";
 import { getAllPlayers } from "../utils";
 import { Modal } from "../Common/Modal";
 import { getTodayPlayer } from "../../firebaseConfig";
-
+import {
+  getGuessesPlayersList,
+  saveGuess,
+  setGusessesDistribution,
+} from "./utils";
 import "./style.scss";
-import { getFormattedDate, saveGuess } from "./utils";
 
 export const GuessArea = () => {
   const [guessCount, setGuessCount] = useState(1);
@@ -23,6 +26,10 @@ export const GuessArea = () => {
     saveGuess(playersList, clickedPlayer);
     setGuessedPlayersList((prevState) => [...prevState, clickedPlayer.value]);
     if (clickedPlayer.value === todaysPlayer.name || guessCount + 1 === 9) {
+      // setGusessesDistribution(
+      //   guessCount,
+      //   clickedPlayer.value === todaysPlayer.name
+      // );
       setShowModal(true);
       setRevealPlayer(true);
       if (clickedPlayer.value !== todaysPlayer.name) {
@@ -49,45 +56,42 @@ export const GuessArea = () => {
   };
 
   const checkForCurrentGuesses = async (todaysPlayer) => {
-    const storedObject = localStorage.getItem("guesses");
-
-    const formattedDate = getFormattedDate();
-
-    const parsedObject = JSON.parse(storedObject);
-    if (!storedObject || !parsedObject[formattedDate]) return;
-
     const allPlayersObj = await getAllPlayers();
-    const playersIdList = parsedObject[formattedDate];
 
-    const guessedStoredPlayers = [];
-    playersIdList.forEach((id) => {
-      const playerObj = allPlayersObj[id];
-      if (!!playerObj) guessedStoredPlayers.push(playerObj.name);
-    });
+    const { guessedStoredPlayers, lastPlayerId } =
+      getGuessesPlayersList(allPlayersObj);
 
     setGuessedPlayersList(guessedStoredPlayers);
     setGuessCount(guessedStoredPlayers.length + 1);
 
-    const lastGuessedPlayerId =
-      guessedStoredPlayers[guessedStoredPlayers.length - 1];
-    const lastGuessedPlayer = allPlayersObj[lastGuessedPlayerId];
+    const lastGuessedPlayer = allPlayersObj[lastPlayerId];
 
-    if (playersIdList.length >= 8 || todaysPlayer.name === lastGuessedPlayer) {
+    if (
+      guessedStoredPlayers.length >= 8 ||
+      todaysPlayer.name === lastGuessedPlayer.name
+    ) {
       setShowModal(true);
       setRevealPlayer(true);
-      setIsGameOver(true);
-      setGuessCount(playersIdList.length);
+      if (guessedStoredPlayers.length >= 8) {
+        setIsGameOver(true);
+        setGuessCount(guessedStoredPlayers.length + 1);
+      }
     }
   };
 
   useEffect(() => {
-    const todaysPlayer = getPlayer();
-    getNames();
-    checkForCurrentGuesses(todaysPlayer);
-  }, []);
+    const fetchData = async () => {
+      try {
+        const todaysPlayer = await getPlayer();
+        getNames();
+        checkForCurrentGuesses(todaysPlayer);
+      } catch (error) {
+        console.error("Error fetching today's player:", error);
+      }
+    };
 
-  console.log(guessCount);
-  console.log(guessedPlayersList);
+    fetchData(); // Call the async function
+  }, []);
 
   return (
     <div className="guess-container">

@@ -1,0 +1,36 @@
+.horizontal-graph {
+  width: 100%;
+  max-width: 600px;
+
+  .graph-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+
+    .guess-label {
+      width: 30px;
+      margin-right: 8px;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .graph-bar {
+      height: 20px;
+      background-color: teal;
+      border-radius: 4px;
+      transition: width 0.3s ease; // Smooth animation for width change
+    }
+
+    .zero {
+      background-color: red;
+    }
+
+    .zero-label {
+      color: red;
+    }
+
+    .guess-count {
+      margin-left: 8px;
+    }
+  }
+}
