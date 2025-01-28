@@ -47,20 +47,22 @@ export const setGusessesDistribution = (guessCount, isCorrect) => {
   localStorage.setItem("guessDist", JSON.stringify(parsedObject));
 };
 
-console.log("temp");
-
 export const getGuessesPlayersList = (allPlayersObj) => {
   const storedObject = localStorage.getItem("guesses");
-
   const formattedDate = getFormattedDate();
 
   const parsedObject = JSON.parse(storedObject);
-  if (!storedObject || !parsedObject[formattedDate]) return;
+
+  if (!storedObject || !parsedObject[formattedDate])
+    return {
+      guessedStoredPlayers: false,
+      lastPlayerId: false,
+    };
 
   const playersIdList = parsedObject[formattedDate];
 
   const guessedStoredPlayers = [];
-  playersIdList.forEach((id) => {
+  playersIdList?.forEach((id) => {
     const playerObj = allPlayersObj[id];
     if (!!playerObj) guessedStoredPlayers.push(playerObj.name);
   });

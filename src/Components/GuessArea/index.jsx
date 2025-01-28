@@ -62,6 +62,7 @@ export const GuessArea = () => {
     const { guessedStoredPlayers, lastPlayerId } =
       getGuessesPlayersList(allPlayersObj);
 
+    if (!guessedStoredPlayers || !lastGuessedPlayer) return;
     setGuessedPlayersList(guessedStoredPlayers);
 
     const lastGuessedPlayer = allPlayersObj[lastPlayerId];
