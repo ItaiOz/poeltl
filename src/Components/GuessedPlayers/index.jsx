@@ -1,4 +1,3 @@
-import React from "react";
 import { SingleGuessedPlayer } from "../SingleGuessedPlayer";
 import "./style.scss";
 

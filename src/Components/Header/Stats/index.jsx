@@ -1,24 +1,12 @@
 import "./style.scss";
 
-const statsObj = {
-  1: 2,
-  2: 1,
-  3: 4,
-  4: 4,
-  5: 7,
-  6: 6,
-  7: 17,
-  8: 2,
-  0: 5,
-};
-
 export const Stats = () => {
   const tempGuessDist = localStorage.getItem("guessDist");
   const parsedObject = JSON.parse(tempGuessDist);
 
   console.log(parsedObject);
 
-  const maxCount = Math.max(...Object.values(statsObj));
+  const maxCount = Math.max(...Object.values(parsedObject));
 
   const sortedData = Object.entries(parsedObject).sort(([keyA], [keyB]) => {
     if (keyA === "0") return 1; // Move "0" to the end

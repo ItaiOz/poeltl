@@ -1,34 +1,5 @@
 import { getPlayers } from "../firebaseConfig";
 
-export const currPlayer = [
-  1627826,
-  "Zubac",
-  "Ivica",
-  "ivica-zubac",
-  1610612746,
-  "clippers",
-  0,
-  "LA",
-  "Clippers",
-  "LAC",
-  "40",
-  "C",
-  "7-0",
-  "240",
-  "Mega Basket",
-  "Croatia",
-  2016,
-  2,
-  32,
-  1,
-  11.6,
-  9.3,
-  1.4,
-  "Season",
-  "2016",
-  "2023",
-];
-
 export const divisionMap = {
   1610612746: "PAC",
   1610612747: "PAC",
